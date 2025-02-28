@@ -8,6 +8,7 @@ const nodemailer = require('nodemailer');
 app.use(cors());
 app.use(express.json());
 // console.log(process.env.GMAIL_PASS);
+
 // Configure email transporter (using Gmail for free)
 const transporter = nodemailer.createTransport({
     service: 'gmail',

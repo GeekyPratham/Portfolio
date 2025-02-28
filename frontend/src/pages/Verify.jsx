@@ -1,13 +1,17 @@
+import { useNavigate } from "react-router-dom";
 import Button from "../components/Button"
 import Inputbox from "../components/Inputbox"
 import { useState } from "react";
+
 export const Verify = ()=>{
     const [generatedOtp,setGeneratedOtp] = useState(null);
     const [email,setEmail] = useState(null);
     const [enteredOtp,setEnteredOtp] = useState(null);
+    const navigate = useNavigate();
 
     const generateOTP = async()=>{
         const num = Math.floor(100000 + Math.random() * 900000);
+        
         console.log(num);
         setGeneratedOtp(num);
         // code to send otp to phone number
@@ -50,6 +54,7 @@ export const Verify = ()=>{
         // Compare the generated OTP with the OTP entered by the user
         if (parseInt(enteredOtp) === generatedOtp) {
             console.log("OTP Verified");
+            navigate('/Addproject');
         } else {
             console.log("OTP Mismatch");
         }
