@@ -18,6 +18,7 @@ function App() {
         <Route path="/resume" element={<Resume />} />
         <Route path="/verify" element={<Verify />} />
         <Route path="/addproject" element={<Addproject/>}/>
+
       </Routes>
     </BrowserRouter>
   );

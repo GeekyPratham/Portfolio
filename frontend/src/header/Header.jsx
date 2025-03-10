@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
+import CrossButton from "../components/CrossButton";
 
 
 export const Header = () => {
