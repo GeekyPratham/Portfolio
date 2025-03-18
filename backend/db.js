@@ -2,13 +2,13 @@
 
 const dotenv = require('dotenv');
 dotenv.config();
-const mongoose = require('mongose');
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 mongoose.connect(`${process.env.MONGO_URI}`)    
 
 const projectSchema = new Schema({
-    name:{
+    title:{
         type: String,
         required: true
     },

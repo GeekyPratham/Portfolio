@@ -4,6 +4,8 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+const Project = require('./db');
+
 
 app.use(cors());
 app.use(express.json());
@@ -40,9 +42,40 @@ app.post("/sendOTP",(req,res)=>{
 
 })
 
-app.post("/addproject",(req,res)=>{
-    console.log(req.body);
-    res.send("Data received");
+app.post("/addproject",async(req,res)=>{
+    // console.log(req.body);
+
+    const body = req.body;
+    const title = await Project.findOne({
+        title : body.title
+    })
+    // if this title already exist in database
+    console.log(title);
+    if(title){
+        console.log("this title already exist");
+        return res.status(411).json({
+            msg:"this title already exist"
+        })
+    }
+
+    // if project not exist then create 
+
+    console.log("creating new project");
+
+    const dbNewProject = await Project.create({
+        title: body.title,
+        description: body.description,
+        techStack: body.techUsed,
+        githubLink: body.githubLink,
+        demoLink: body.demonstrationLink,
+        image: body.allImage
+    })
+    console.log("new project created");
+    console.log(dbNewProject);
+
+    return res.status(200).json({
+        msg:"Data received"
+    })
 })
 
 app.listen(5000,()=>{
