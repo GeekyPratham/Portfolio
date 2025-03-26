@@ -70,13 +70,34 @@ app.post("/addproject",async(req,res)=>{
         demoLink: body.demonstrationLink,
         image: body.allImage
     })
-    console.log("new project created");
-    console.log(dbNewProject);
+     // Save to database
+    await dbNewProject.save();
+    console.log("New project created:", dbNewProject);
+ 
 
     return res.status(200).json({
         msg:"Data received"
     })
 })
+
+// sending all the list of project to frontend;
+app.get("/getProject",async (req,res)=>{
+    const projects = await Project.find();
+    console.log("sending project to frontend");
+    console.log(projects);
+    console.log("sending project to frontend");
+    res.json({
+        project: projects.map(proj=>({
+            title: proj.title,
+            description: proj.description,
+            techStack: proj.techStack,
+            githubLink: proj.githubLink,
+            demoLink: proj.demoLink,
+            image: proj.image
+        }))
+    })
+})
+
 
 app.listen(5000,()=>{
     console.log("Server is running on port 5000");
