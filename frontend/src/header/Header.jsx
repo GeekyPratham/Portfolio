@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Button from "../components/Button";
 import { FiMenu, FiX } from "react-icons/fi";
 
@@ -10,7 +10,9 @@ export const Header = () => {
   return (
     <header className="bg-gray-900 text-white shadow-md">
       <div className="flex items-center justify-between px-6 py-4 md:px-8">
-        <h1 className="text-2xl font-bold">Pratham Raj</h1>
+        <Link to="/">
+                <h1 className="text-2xl font-bold text-green-500  cursor-pointer ">Pratham Raj</h1>
+            </Link>
         
         {/* Mobile Menu Button */}
         <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
@@ -22,7 +24,7 @@ export const Header = () => {
           <Button buttonName="Home" onClick={() => navigate("/")} />
           <Button buttonName="Resume" onClick={() => navigate("/resume")} />
           <Button buttonName="Work" onClick={() => navigate("/work")} />
-          <Button buttonName="Experience" onClick={() => navigate("/Experience")} />
+          {/* <Button buttonName="Experience" onClick={() => navigate("/Experience")} /> */}
           <Button buttonName="Hire Me" onClick={() => navigate("/HireMe")} />
         </nav>
       </div>
@@ -33,7 +35,7 @@ export const Header = () => {
           <Button buttonName="Home" onClick={() => { navigate("/"); setMenuOpen(false); }} width="w-40" />
           <Button buttonName="Resume" onClick={() => { navigate("/resume"); setMenuOpen(false); }} width="w-40"/>
           <Button buttonName="Work" onClick={() => { navigate("/work"); setMenuOpen(false); }} width="w-40"/>
-          <Button buttonName="Experience" onClick={() => { navigate("/Experience"); setMenuOpen(false); }}width="w-40" />
+          {/* <Button buttonName="Experience" onClick={() => { navigate("/Experience"); setMenuOpen(false); }}width="w-40" /> */}
           <Button buttonName="Hire Me" onClick={() => { navigate("/HireMe"); setMenuOpen(false); }} width="w-40"/>
         </nav>
       )}
