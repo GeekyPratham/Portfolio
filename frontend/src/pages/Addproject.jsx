@@ -57,6 +57,8 @@ export const Addproject = () => {
                     <div className="flex flex-col md:flex-row gap-2">
                         <Inputbox ref={fileInputRef} type="file" name="Upload" className="bg-gray-800 text-white" onChange={async (e) => {
                             if (!e.target.files[0]) return;
+
+                            // converting the image into url by uploading it into cloudinary
                             const formData = new FormData();
                             formData.append("file", e.target.files[0]);
                             formData.append("upload_preset", "projectAddOnPortfolio"); 

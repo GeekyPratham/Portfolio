@@ -5,7 +5,7 @@ const app = express();
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 const Project = require('./db');
-
+const multer = require("multer");
 
 app.use(cors());
 app.use(express.json());
@@ -41,6 +41,8 @@ app.post("/sendOTP",(req,res)=>{
     });
 
 })
+
+
 
 app.post("/addproject",async(req,res)=>{
     // console.log(req.body);
@@ -97,6 +99,98 @@ app.get("/getProject",async (req,res)=>{
         }))
     })
 })
+
+// Multer setup for file uploads
+const upload = multer({ dest: "sendEmail/" }); // Files will go to /uploads folder
+
+// app.post("/sendEmail", upload.array("Files"),(req,res)=>{
+//     console.log("Purpose", req.body.Purpose);
+//     console.log("Email", req.body.Email);
+//     console.log("Github", req.body.Github);
+//     console.log("Linkedin", req.body.Linkedin);
+//     console.log("Contact", req.body.Contact);
+//     console.log("Role", req.body.Role);
+//     console.log("Description", req.body.Description);
+   
+//     // req.files.forEach(file => {
+//     //     console.log(file);
+//     // });
+    
+//     for(let i=0;i<req.files.length;i++){
+//         console.log(`File${i}`,req.files[i]);
+//     }
+    
+
+//     return res.json({ success: true, message: "Data received!" });
+// })
+
+const fs = require("fs");
+const path = require("path");
+
+app.post("/sendEmail", upload.array("Files"), async (req, res) => {
+    const {
+        Purpose,
+        Email,
+        Github,
+        Linkedin,
+        Contact,
+        Role,
+        Description
+    } = req.body;
+
+    console.log("Form Data:");
+    console.log("Purpose:", Purpose);
+    console.log("Email:", Email);
+    console.log("Github:", Github);
+    console.log("Linkedin:", Linkedin);
+    console.log("Contact:", Contact);
+    console.log("Role:", Role);
+    console.log("Description:", Description);
+
+    console.log("Files:", req.files);
+
+    // Prepare file attachments for the email
+    const attachments = req.files.map(file => ({
+        filename: file.originalname,
+        path: path.join(__dirname, file.path)
+    }));
+
+    // Create mail content
+    const mailOptions = {
+        from: process.env.GMAIL_USER,
+        to: process.env.GMAIL_USER, // Send to yourself
+        subject: `New Submission: ${Purpose}`,
+        text: `
+        New Submission Received:
+
+        Purpose: ${Purpose}
+        Email: ${Email}
+        Contact: ${Contact}
+        Role: ${Role}
+        Description: ${Description}
+        Github: ${Github}
+        Linkedin: ${Linkedin}
+        `,
+        attachments
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+        console.log(" Email sent successfully!");
+
+        // Delete the uploaded files after email is sent (optional)
+        req.files.forEach(file => {
+            fs.unlink(file.path, err => {
+                if (err) console.error("Failed to delete file:", err);
+            });
+        });
+
+        return res.json({ success: true, message: "Email sent successfully!" });
+    } catch (error) {
+        console.error(" Error sending email:", error);
+        return res.status(500).json({ success: false, message: "Failed to send email." });
+    }
+});
 
 
 app.listen(5000,()=>{

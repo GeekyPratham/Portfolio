@@ -13,59 +13,49 @@ export const HireMe = () => {
     const [contact, setContact] = useState("");
     const [role, setRole] = useState(null);
     const [description, setDescription] = useState("");
-    const [files, setFiles] = useState([]);
+    const [files, setFiles] = useState([]);// containing all the files
 
-    // Handler for file input
-    const handleFileChange = (event) => {
-        const selectedFiles = Array.from(event.target.files);
-        setFiles([...files, ...selectedFiles]);
-    };
+    const fileInputRef = useRef(null);
 
-    // Handler to remove file from the state
-    const handleFileRemove = (indexToRemove) => {
-        setFiles(files.filter((_, index) => index !== indexToRemove));
-    };
-
-    // Submit handler to send data to backend
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        // Prepare data payload
-        const formData = {
-            purpose,
-            name,
-            email,
-            github,
-            linkedin,
-            contact,
-            role,
-            description,
-            files, 
-        };
-
-        console.log("Form Data Submitted:", formData);
-
-        try {
-            const response = await fetch("http://localhost:5000/sendEmail", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(formData)
-
-            });
-            const data = await response.json();
-            if (data.success) {
-                alert("Email sent successfully");
-            } else {
-                alert("Failed to send Email");
-            }
-        } catch (e) {
-            console.error("Error in sending Email:", e);
-        }
+    const handleSubmit = async (e) =>{
+         // your form handling logic
+         e.preventDefault();
+         const formData = new FormData();
+         formData.append("Purpose", purpose?.value || "");
+        formData.append("Name", name);
+        formData.append("Email", email);
+        formData.append("Github", github);
+        formData.append("Linkedin", linkedin);
+        formData.append("Contact", contact);
+        formData.append("Role", role?.value || "");
+        formData.append("Description", description);
        
-    };
-
+        // for(let i=0;i<files.length;i++){
+        //     formData.append(`File ${i}` ,files[i]);
+        // }
+        for (let i = 0; i < files.length; i++) {
+            formData.append("Files", files[i]); //
+        }
+        
+         
+          // 🔍 Log FormData contents
+         for (let [key, value] of formData.entries()) {
+             console.log(`${key}:`, value);
+         }
+         try{
+             const res = await fetch("http://localhost:5000/sendEmail",{
+                 method : "POST",
+                 body : formData,
+             });
+ 
+             const result = await res.json();
+             console.log("Server Response:", result);
+             alert("Form submitted successfully!");
+         } catch (error) {
+             console.error("Error submitting form:", error);
+             alert("Submission failed.");
+         }
+    }
     return (
         <div className="w-screen h-screen overflow-y-auto bg-gradient-to-b from-black via-gray-900 to-gray-800 px-6 py-6 text-white">
             {/* Header */}
@@ -181,10 +171,15 @@ export const HireMe = () => {
                                 <h2 className="text-xl font-bold text-green-400">Attach File</h2>
                                 <div className="w-full bg-gray-800 p-4 rounded-lg shadow-md border border-gray-700 flex flex-col items-center">
                                     <input
+                                        ref={fileInputRef}
                                         type="file"
                                         multiple
                                         className="w-full p-2 mt-2 border rounded bg-gray-700 text-white cursor-pointer file:bg-green-500 file:border-none file:text-white file:px-4 file:py-2 file:rounded-lg hover:file:bg-green-600 transition"
-                                        onChange={handleFileChange}
+                                        onChange={async(e)=>{
+                                            console.log(e.target.files[0]);
+                                            setFiles([...files,e.target.files[0]])
+                                            fileInputRef.current.value = "";
+                                        }}
                                     />
                                     {/* Display uploaded files */}
                                     <div className="mt-4 w-full text-center">
@@ -197,7 +192,13 @@ export const HireMe = () => {
                                                         </span>
                                                         <button 
                                                             className="ml-4 text-red-500 hover:text-red-700 transition" 
-                                                            onClick={() => handleFileRemove(index)}
+                                                            onClick={async() =>{
+                                                                let newFile = [];
+                                                                for(let i=0;i<files.length;i++){
+                                                                    if(i!==index) newFile.push(files[i]);
+                                                                }   
+                                                                setFiles(newFile); 
+                                                            }}
                                                             type="button"
                                                         >
                                                             Delete
