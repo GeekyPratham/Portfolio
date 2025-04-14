@@ -16,10 +16,10 @@ const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: process.env.GMAIL_USER, // Your Gmail address
-        pass: process.env.GMAIL_PASS, // App-specific password (see step 2)
+        pass: process.env.GMAIL_PASS, // App-specific password
     },
 });
-app.post("/sendOTP",(req,res)=>{
+app.post("/sendOTP",async(req,res)=>{
     const {email,otp} = req.body;
     // console.log(email);
     // console.log(otp);
@@ -30,7 +30,7 @@ app.post("/sendOTP",(req,res)=>{
         subject: "OTP for verification",
         text: `your OTP is ${otp}`,
     }
-    transporter.sendMail(mailOption, (error, info) => {
+    await transporter.sendMail(mailOption, (error, info) => {
         if (error) {
             console.error('Error sending email:', error);
             res.status(500).json({ success: false, error });
@@ -103,31 +103,13 @@ app.get("/getProject",async (req,res)=>{
 // Multer setup for file uploads
 const upload = multer({ dest: "sendEmail/" }); // Files will go to /uploads folder
 
-// app.post("/sendEmail", upload.array("Files"),(req,res)=>{
-//     console.log("Purpose", req.body.Purpose);
-//     console.log("Email", req.body.Email);
-//     console.log("Github", req.body.Github);
-//     console.log("Linkedin", req.body.Linkedin);
-//     console.log("Contact", req.body.Contact);
-//     console.log("Role", req.body.Role);
-//     console.log("Description", req.body.Description);
-   
-//     // req.files.forEach(file => {
-//     //     console.log(file);
-//     // });
-    
-//     for(let i=0;i<req.files.length;i++){
-//         console.log(`File${i}`,req.files[i]);
-//     }
-    
 
-//     return res.json({ success: true, message: "Data received!" });
-// })
 
 const fs = require("fs");
 const path = require("path");
 
 app.post("/sendEmail", upload.array("Files"), async (req, res) => {
+    // destructuring all the data(body) comes from frontend
     const {
         Purpose,
         Email,
@@ -162,7 +144,6 @@ app.post("/sendEmail", upload.array("Files"), async (req, res) => {
         subject: `New Submission: ${Purpose}`,
         text: `
         New Submission Received:
-
         Purpose: ${Purpose}
         Email: ${Email}
         Contact: ${Contact}
