@@ -30,7 +30,7 @@ app.post("/sendOTP",async(req,res)=>{
         subject: "OTP for verification",
         text: `your OTP is ${otp}`,
     }
-    await transporter.sendMail(mailOption, (error, info) => {
+     transporter.sendMail(mailOption, (error, info) => {
         if (error) {
             console.error('Error sending email:', error);
             res.status(500).json({ success: false, error });
@@ -101,12 +101,14 @@ app.get("/getProject",async (req,res)=>{
 })
 
 // Multer setup for file uploads
-const upload = multer({ dest: "sendEmail/" }); // Files will go to /uploads folder
+// const upload = multer({ dest: "sendEmail/" }); // Files will go to /uploads folder
 
 
+const upload = multer({ storage: multer.memoryStorage() });
 
-const fs = require("fs");
-const path = require("path");
+
+// const fs = require("fs");
+// const path = require("path");
 
 app.post("/sendEmail", upload.array("Files"), async (req, res) => {
     // destructuring all the data(body) comes from frontend
@@ -132,10 +134,15 @@ app.post("/sendEmail", upload.array("Files"), async (req, res) => {
     console.log("Files:", req.files);
 
     // Prepare file attachments for the email
+    // const attachments = req.files.map(file => ({
+    //     filename: file.originalname,
+    //     path: path.join(__dirname, file.path)
+    // }));
+
     const attachments = req.files.map(file => ({
         filename: file.originalname,
-        path: path.join(__dirname, file.path)
-    }));
+        content: file.buffer
+      }));
 
     // Create mail content
     const mailOptions = {
@@ -156,15 +163,16 @@ app.post("/sendEmail", upload.array("Files"), async (req, res) => {
     };
 
     try {
-        await transporter.sendMail(mailOptions);
+         transporter.sendMail(mailOptions);
+
         console.log(" Email sent successfully!");
 
         // Delete the uploaded files after email is sent (optional)
-        req.files.forEach(file => {
-            fs.unlink(file.path, err => {
-                if (err) console.error("Failed to delete file:", err);
-            });
-        });
+        // req.files.forEach(file => {
+        //     fs.unlink(file.path, err => {
+        //         if (err) console.error("Failed to delete file:", err);
+        //     });
+        // });
 
         return res.json({ success: true, message: "Email sent successfully!" });
     } catch (error) {

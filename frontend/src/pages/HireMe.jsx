@@ -1,6 +1,8 @@
 import { Header } from "../header/Header";
 import Select from "react-select";
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 export const HireMe = () => {
     const selectRef = useRef(null);
@@ -16,7 +18,7 @@ export const HireMe = () => {
     const [files, setFiles] = useState([]);// containing all the files
 
     const fileInputRef = useRef(null);
-
+    const navigate = useNavigate();
     const handleSubmit = async (e) =>{
          // your form handling logic
          e.preventDefault();
@@ -47,10 +49,15 @@ export const HireMe = () => {
                  method : "POST",
                  body : formData,
              });
- 
+            // do lazy loading until the response from the backend(server) side comes
              const result = await res.json();
+             
+             
+
              console.log("Server Response:", result);
              alert("Form submitted successfully!");
+
+             navigate("/");
          } catch (error) {
              console.error("Error submitting form:", error);
              alert("Submission failed.");
