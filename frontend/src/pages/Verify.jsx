@@ -14,7 +14,7 @@ export const Verify = () => {
         setGeneratedOtp(num);
 
         try {
-            const response = await fetch("http://localhost:5000/sendOTP", {
+            const response = await fetch("https://portfolio-hppv.onrender.com/sendOTP", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

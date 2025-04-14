@@ -45,7 +45,7 @@ export const HireMe = () => {
              console.log(`${key}:`, value);
          }
          try{
-             const res = await fetch("http://localhost:5000/sendEmail",{
+             const res = await fetch("https://portfolio-hppv.onrender.com/sendEmail",{
                  method : "POST",
                  body : formData,
              });

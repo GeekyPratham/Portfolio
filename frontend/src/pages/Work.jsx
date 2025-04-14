@@ -9,7 +9,7 @@ export const Work = () => {
     const [currIndex, setCurrIndex] = useState(0);
 
     useEffect(() => {
-        axios.get("http://localhost:5000/getProject")
+        axios.get("https://portfolio-hppv.onrender.com/getProject")
             .then(response => {
                 console.log("Full Backend Response:", response.data || []);
                 setProject(response.data.project);

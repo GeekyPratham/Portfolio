@@ -92,7 +92,7 @@ export const Addproject = () => {
                 </div>
 
                 <Button buttonName="Submit" onClick={async () => {
-                    const response = await axios.post("http://localhost:5000/addproject", {
+                    const response = await axios.post("https://portfolio-hppv.onrender.com/addproject", {
                         title,
                         description,
                         techUsed,
