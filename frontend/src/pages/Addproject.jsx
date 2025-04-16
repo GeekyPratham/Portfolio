@@ -24,7 +24,15 @@ export const Addproject = () => {
                 <h2 className="text-2xl font-bold text-green-400 mb-4 text-center">Add Your Project</h2>
 
                 <Inputbox type="text" placeholder="Title" name="Title" className="bg-gray-800 text-white" onChange={(e) => setTitle(e.target.value)} />
-                <Inputbox type="text" placeholder="Description" name="Description" className="bg-gray-800 text-white" onChange={(e) => setDescription(e.target.value)} />
+
+                {/* Updated Textarea for Description */}
+                <textarea
+                    placeholder="Description"
+                    name="Description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    className="bg-gray-800 text-white w-full min-h-[100px] resize-none p-2 rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-green-400 mb-4 mt-4"
+                />
 
                 {/* Tech Used */}
                 <div className="flex flex-col md:flex-row w-full gap-2">
@@ -58,7 +66,6 @@ export const Addproject = () => {
                         <Inputbox ref={fileInputRef} type="file" name="Upload" className="bg-gray-800 text-white" onChange={async (e) => {
                             if (!e.target.files[0]) return;
 
-                            // converting the image into url by uploading it into cloudinary
                             const formData = new FormData();
                             formData.append("file", e.target.files[0]);
                             formData.append("upload_preset", "projectAddOnPortfolio"); 
