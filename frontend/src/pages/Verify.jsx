@@ -14,7 +14,8 @@ export const Verify = () => {
         setGeneratedOtp(num);
 
         try {
-            const response = await fetch("https://portfolio-hppv.onrender.com/sendOTP", {
+            const response = await fetch("http://localhost:5000/sendOTP", {
+                // https://portfolio-hppv.onrender.com
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -22,10 +23,11 @@ export const Verify = () => {
                 body: JSON.stringify({ email: email, otp: num })
             });
             const data = await response.json();
+            console.log(data);
             if (data.success) {
                 alert("OTP sent successfully");
             } else {
-                alert("Failed to send OTP");
+                alert("unvalid user");
             }
         } catch (e) {
             console.error("Error sending OTP:", e);

@@ -64,20 +64,20 @@ export const HireMe = () => {
          }
     }
     return (
-        <div className="w-screen h-screen overflow-y-auto bg-gradient-to-b from-black via-gray-900 to-gray-800 px-6 py-6 text-white">
+        <div className="w-screen h-screen overflow-y-auto bg-gradient-to-b from-black via-gray-900 to-gray-800 px-6  py-6 text-white">
             {/* Header */}
             <header className="mb-8">
                 <Header />
             </header>
             <div className="w-full flex justify-center mt-10">
-                <div className="w-full max-w-6xl bg-gray-900 bg-opacity-80 backdrop-blur-lg p-8 rounded-xl shadow-xl">
-                    <h2 className="text-3xl sm:text-4xl font-bold text-green-400 text-center mb-3">Let's Work</h2>
-                    <form onSubmit={handleSubmit} className="w-full bg-black/50 backdrop-blur-lg p-5 flex flex-col gap-5 min-h-[60vh]">
+                <div className="w-full max-w-6xl bg-black/50  border border-gray-700  bg-opacity-80  backdrop-blur-lg  p-1 sm:p-8 rounded-xl shadow-xl">
+                    <h2 className="text-3xl  sm:text-4xl mt-2 font-bold text-green-400 text-center mb-3">Let's Work</h2>
+                    <form onSubmit={handleSubmit} className="w-full bg-gray-900 backdrop-blur-lg  p-1 sm:p-5 flex flex-col gap-5 min-h-[60vh]">
                         {/* Fill your details */}
                         <h3 className="text-xl sm:text-2xl font-bold text-green-400">Fill your details</h3>
-                        <div className="w-full flex flex-col gap-6 p-6 sm:p-10 bg-gray-800 rounded-xl shadow-lg border border-gray-700 min-h-[80vh]">
+                        <div  className="flex flex-col gap-5">
                             {/* Purpose */}
-                            <div className="w-full flex flex-col sm:flex-row items-center justify-between">
+                            <div className="w-full flex flex-col  sm:flex-row items-center justify-between">
                                 <h2 className="text-xl sm:text-2xl font-bold text-green-400">Purpose</h2>
                                 <Select
                                     ref={selectRef}

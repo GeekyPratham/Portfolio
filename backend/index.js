@@ -20,9 +20,18 @@ const transporter = nodemailer.createTransport({
     },
 });
 app.post("/sendOTP",async(req,res)=>{
+    console.log("object");
     const {email,otp} = req.body;
     // console.log(email);
     // console.log(otp);
+    console.log(req.body.email);
+    const m = `${process.env.GMAIL_USER}`;
+    console.log(m);
+    if(email!== `${process.env.GMAIL_USER}`){
+        return res.status(411).json({
+            msg:"this is not the valid email"
+        })
+    }
 
     const mailOption = {
         from: process.env.GMAIL_USER,

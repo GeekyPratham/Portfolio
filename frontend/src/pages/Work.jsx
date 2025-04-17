@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useSwipeable } from "react-swipeable";
 import { Header } from "../header/Header";
 import Button from "../components/Button";
 
@@ -26,7 +27,7 @@ export const Work = () => {
                 <Header />
             </header>
 
-            {/* Upload Button (Outside Container) */}
+            {/* Upload Button */}
             <div className="flex justify-end mb-6">
                 <Button buttonName={"Upload Project"} onClick={() => navigate('/Verify')} />
             </div>
@@ -36,7 +37,7 @@ export const Work = () => {
                 {project.length > 0 && <Proj proj={project[currIndex]} index={currIndex} />}
             </div>
 
-            {/* Navigation Buttons (Outside Container) */}
+            {/* Navigation Buttons */}
             <div className="flex justify-between mt-6 max-w-6xl mx-auto">
                 <Button buttonName={"Prev"} onClick={() => {
                     let newIdx = currIndex - 1;
@@ -53,6 +54,22 @@ export const Work = () => {
 // Project Component
 function Proj({ proj, index }) {
     const [currImageIndex, setCurrImageIndex] = useState(0);
+
+    const handleSwipe = (dir) => {
+        if (dir === "LEFT") {
+            setCurrImageIndex((currImageIndex + 1) % proj.image.length);
+        } else if (dir === "RIGHT") {
+            const newIdx = currImageIndex - 1;
+            setCurrImageIndex(newIdx < 0 ? proj.image.length - 1 : newIdx);
+        }
+    };
+
+    const swipeHandlers = useSwipeable({
+        onSwipedLeft: () => handleSwipe("LEFT"),
+        onSwipedRight: () => handleSwipe("RIGHT"),
+        preventScrollOnSwipe: true,
+        trackMouse: true,
+    });
 
     return (
         <div className="flex flex-col lg:flex-row w-full gap-8">
@@ -86,24 +103,27 @@ function Proj({ proj, index }) {
                 </div>
             </div>
 
-            {/* Image Section (Same Background) */}
-            <div className="p-6 w-full lg:w-1/2 bg-gray-900/80 border border-gray-700 shadow-lg rounded-lg backdrop-blur-lg flex items-center justify-center gap-4">
-                <button 
-                    onClick={() => {
-                        let newImageIdx = currImageIndex - 1;
-                        setCurrImageIndex(newImageIdx < 0 ? proj.image.length - 1 : newImageIdx);
-                    }} 
-                    className="px-4 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition">
+            {/* Swipeable Image Section with Buttons on Larger Screens */}
+            <div
+                {...swipeHandlers}
+                className="p-2 w-full lg:w-1/2 bg-gray-900/80 border border-gray-700 shadow-lg rounded-lg backdrop-blur-lg flex items-center justify-between"
+            >
+                {/* Prev Button - only visible on sm and up */}
+                <button
+                    onClick={() => handleSwipe("RIGHT")}
+                    className="hidden sm:flex px-2 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition"
+                >
                     ◀️
                 </button>
 
+                {/* Image */}
                 {proj.image.length > 0 && <Image img={proj.image[currImageIndex]} />}
 
-                <button 
-                    onClick={() => {
-                        setCurrImageIndex((currImageIndex + 1) % proj.image.length);
-                    }} 
-                    className="px-4 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition">
+                {/* Next Button - only visible on sm and up */}
+                <button
+                    onClick={() => handleSwipe("LEFT")}
+                    className="hidden sm:flex px-2 py-2 bg-white/20 text-white rounded-full hover:bg-white/30 transition"
+                >
                     ▶️
                 </button>
             </div>
@@ -114,8 +134,15 @@ function Proj({ proj, index }) {
 // Image Component
 function Image({ img }) {
     return (
-        <div className="w-full h-full flex items-center justify-center">
-            <img src={img} className="w-full h-auto max-h-96 object-cover rounded-lg shadow-lg" />
+        <div className="w-full h-64 sm:h-80 md:h-[28rem] overflow-x-auto">
+            <div className="w-full h-full flex justify-center">
+                <img
+                    src={img}
+                    className="h-full object-contain rounded-lg shadow-lg"
+                    alt="project"
+                />
+            </div>
         </div>
     );
 }
+
