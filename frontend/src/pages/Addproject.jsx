@@ -75,7 +75,7 @@ export const Addproject = () => {
                                 "https://api.cloudinary.com/v1_1/db0hcdu39/image/upload",
                                 formData
                             );
-
+                            console.log(res)
                             setImage(res.data.url);
                         }} />
                         <div className="flex flex-col w-full md:w-1/5 mt-4 md:mt-8">

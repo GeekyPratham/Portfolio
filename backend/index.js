@@ -7,7 +7,11 @@ const nodemailer = require('nodemailer');
 const Project = require('./db');
 const multer = require("multer");
 
-app.use(cors());
+
+app.use(cors({
+    origin: "https://portfolio-frontend-81jv.onrender.com",// only this domain can access the backend
+    credentials: true
+}));
 app.use(express.json());
 // console.log(process.env.GMAIL_PASS);
 
