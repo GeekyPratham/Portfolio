@@ -7,11 +7,24 @@ const nodemailer = require('nodemailer');
 const Project = require('./db');
 const multer = require("multer");
 
+// i am allowing one deployed domain to access my backend and one for local host
 
+const allowedOrigins = [
+    "https://portfolio-frontend-81jv.onrender.com",
+    "http://localhost:5173/"
+];
 app.use(cors({
-    origin: "https://portfolio-frontend-81jv.onrender.com",// only this domain can access the backend
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true
-}));
+  }));
 app.use(express.json());
 // console.log(process.env.GMAIL_PASS);
 

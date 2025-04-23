@@ -23,7 +23,7 @@ export const Header = () => {
         <nav className="hidden md:flex space-x-4">
           <Button buttonName="Home" onClick={() => navigate("/")} />
           <Button buttonName="Resume" onClick={() => navigate("/resume")} />
-          <Button buttonName="Work" onClick={() => navigate("/work")} />
+          <Button buttonName="Project" onClick={() => navigate("/work")} />
           {/* <Button buttonName="Experience" onClick={() => navigate("/Experience")} /> */}
           <Button buttonName="Hire Me" onClick={() => navigate("/HireMe")} />
         </nav>

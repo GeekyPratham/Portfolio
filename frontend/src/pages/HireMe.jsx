@@ -219,7 +219,7 @@ export const HireMe = () => {
                             </div>
                             {/* Submit Button */}
                             <div className="text-center">
-                                <button type="submit" className="px-6 py-3 mt-4 bg-green-500 text-white rounded-xl hover:bg-green-600 transition duration-300">Submit</button>
+                                <button type="submit" className="px-6 py-3 mt-4 bg-green-500 text-white rounded-xl hover:bg-green-600 transition duration-300">Send</button>
                             </div>
                         </div>
                     </form>
