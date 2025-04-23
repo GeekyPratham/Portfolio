@@ -11,7 +11,7 @@ const multer = require("multer");
 
 const allowedOrigins = [
     "https://portfolio-frontend-81jv.onrender.com",
-    "http://localhost:5173/"
+    "http://localhost:5173"
 ];
 app.use(cors({
     origin: function (origin, callback) {
