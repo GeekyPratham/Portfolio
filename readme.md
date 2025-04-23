@@ -59,8 +59,10 @@ Tabbed navigation includes:
    cd your-portfolio
 
 2. Install dependencies:
-   npm install
-   cd frontend && npm install
+    ```bash
+    npm install
+    cd frontend 
+    npm install
 
 3. Set up environment variables in .env files for:
     MongoDB URI
