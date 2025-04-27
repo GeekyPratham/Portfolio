@@ -57,7 +57,7 @@ export const Resume = () => {
                         <Button buttonName="Courses" onClick={() => handleButtonClick(4)} width="w-48 sm:w-60" />
                         <Button buttonName="Skills" onClick={() => handleButtonClick(2)} width="w-48 sm:w-60" />
                         <Button buttonName="About Me" onClick={() => handleButtonClick(3)} width="w-48 sm:w-60" />
-                        <Button buttonName="View Resume" onClick={() => window.open("/Resume.pdf", "_blank")} width="w-48 sm:w-60" />
+                        <Button buttonName="View Resume" onClick={() => window.open("../assets/Resume.pdf", "_blank")} width="w-48 sm:w-60" />
                     </div>
 
                 </div>
