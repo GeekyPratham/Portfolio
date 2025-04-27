@@ -11,7 +11,8 @@ const multer = require("multer");
 
 const allowedOrigins = [
     "https://portfolio-frontend-81jv.onrender.com",
-    "https://portfolio-pratham-rajs-projects-15fe237a.vercel.app",
+    // "https://portfolio-pratham-rajs-projects-15fe237a.vercel.app",
+    "https://portfolio-79cxfvvre-pratham-rajs-projects-15fe237a.vercel.app",
     "http://localhost:5173"
 ];
 app.use(cors({
