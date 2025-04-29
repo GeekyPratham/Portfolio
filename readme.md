@@ -4,7 +4,7 @@ This is a full-stack, responsive portfolio website built to showcase my skills, 
 
 ##  Live Demo
 
-https://portfolio-frontend-81jv.onrender.com
+https://portfolio-79cxfvvre-pratham-rajs-projects-15fe237a.vercel.app/
 
 ##  Tech Stack
 
