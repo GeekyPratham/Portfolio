@@ -114,11 +114,13 @@ export const Addproject = () => {
                         });
                         if (response.data === 200) {
                           alert("Data received and added to resume page");
+                          navigate("/work");
                         } else {
                           alert("Invalid user");
                         }
                       } catch (error) {
                         alert("invalid user");
+                        navigate('/');
                       }
                       
                     
