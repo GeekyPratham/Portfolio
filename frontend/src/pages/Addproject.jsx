@@ -106,9 +106,15 @@ export const Addproject = () => {
                         githubLink,
                         demonstrationLink,
                         allImage
+                    }, {
+                        headers: {
+                            Authorization: "Bearer " + localStorage.getItem("token")
+                        }
                     });
-                    if (response.data === "Data received") {
-                        alert("Data received");
+                    if (response.data == 200) {
+                        alert("Data received and added to resume page");
+                    }else{
+                        alert("invalid user")
                     }
                     navigate("/Work");
                 }} />

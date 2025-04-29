@@ -7,6 +7,11 @@ const nodemailer = require('nodemailer');
 const Project = require('./db');
 const multer = require("multer");
 
+const jwt = require("jsonwebtoken");
+const {JWT_SECRET} = require("./config.js")
+
+const {authMiddleware} =  require("./middlewares.js")
+
 // i am allowing one deployed domain to access my backend and one for local host
 
 const allowedOrigins = [
@@ -72,8 +77,18 @@ app.post("/sendOTP",async(req,res)=>{
 })
 
 
+app.post("/userVerify", async(req,res)=>{
+    const {email} = req.body;
+    const token = jwt.sign({
+        email
+    },JWT_SECRET);
 
-app.post("/addproject",async(req,res)=>{
+    return res.status(200).json({
+        msg:"owner login successfull!",
+        token:token
+    })
+})
+app.post("/addproject",authMiddleware,async(req,res)=>{
     // console.log(req.body);
 
     const body = req.body;

@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Inputbox from "../components/Inputbox";
 import { useState } from "react";
+import axios from "axios";
 
 export const Verify = () => {
     const [generatedOtp, setGeneratedOtp] = useState(null);
@@ -34,12 +35,17 @@ export const Verify = () => {
         }
     };
 
-    const verifyOTP = () => {
+    const verifyOTP = async () => {
         if (!generatedOtp) {
             alert("Please generate an OTP first");
             return;
         }
         if (parseInt(enteredOtp) === generatedOtp) {
+            const res = await axios.post("https://portfolio-hppv.onrender.com/userVerify",{
+                email
+            })
+            console.log(res.data.token);
+            localStorage.setItem("token",res.data.token)
             alert("OTP Verified");
             navigate('/Addproject');
         } else {
