@@ -99,24 +99,29 @@ export const Addproject = () => {
                 </div>
 
                 <Button buttonName="Submit" onClick={async () => {
-                    const response = await axios.post("https://portfolio-hppv.onrender.com/addproject", {
-                        title,
-                        description,
-                        techUsed,
-                        githubLink,
-                        demonstrationLink,
-                        allImage
-                    }, {
-                        headers: {
+                    try {
+                        const response = await axios.post("https://portfolio-hppv.onrender.com/addproject", {
+                          title,
+                          description,
+                          techUsed,
+                          githubLink,
+                          demonstrationLink,
+                          allImage
+                        }, {
+                          headers: {
                             Authorization: "Bearer " + localStorage.getItem("token")
+                          }
+                        });
+                        if (response.data === 200) {
+                          alert("Data received and added to resume page");
+                        } else {
+                          alert("Invalid user");
                         }
-                    });
-                    if (response.data == 200) {
-                        alert("Data received and added to resume page");
-                    }else{
-                        alert("invalid user")
-                    }
-                    navigate("/Work");
+                      } catch (error) {
+                        alert("invalid user");
+                      }
+                      
+                    
                 }} />
             </div>
         </div>
