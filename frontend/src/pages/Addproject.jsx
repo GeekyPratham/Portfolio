@@ -114,7 +114,7 @@ export const Addproject = () => {
                         });
                         if (response.data === 200) {
                           alert("Data received and added to resume page");
-                          navigate("/work");
+                          navigate("/Work");
                         } else {
                           alert("Invalid user");
                         }
