@@ -91,8 +91,8 @@ app.post("/userVerify", async(req,res)=>{
     })
 })
 app.post("/addproject",authMiddleware,async(req,res)=>{
-    // console.log(req.body);
-
+    console.log(req.body);
+    console.log("pratham raj")
     const body = req.body;
     const title = await Project.findOne({
         title : body.title
