@@ -8,7 +8,7 @@ const Project = require('./db');
 const multer = require("multer");
 
 const jwt = require("jsonwebtoken");
-const {JWT_SECRET} = require("./config.js")
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const {authMiddleware} =  require("./middlewares.js")
 
