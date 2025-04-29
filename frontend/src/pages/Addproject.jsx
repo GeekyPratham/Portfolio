@@ -100,7 +100,10 @@ export const Addproject = () => {
 
                 <Button buttonName="Submit" onClick={async () => {
                     try {
+                        console.log("Token being sent:", "Bearer " + localStorage.getItem("token"));
+
                         const response = await axios.post("https://portfolio-hppv.onrender.com/addproject", {
+                            
                           title,
                           description,
                           techUsed,
@@ -112,15 +115,16 @@ export const Addproject = () => {
                             Authorization: "Bearer " + localStorage.getItem("token")
                           }
                         });
-                        if (response.data === 200) {
+                        if (response.status === 200) {
+                            console.log("i am here")
                           alert("Data received and added to resume page");
-                          navigate("/Work");
+                        //   navigate("/Work");
                         } else {
                           alert("Invalid user");
                         }
                       } catch (error) {
                         alert("invalid user");
-                        navigate('/');
+                        // navigate('/');
                       }
                       
                     

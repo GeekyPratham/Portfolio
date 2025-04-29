@@ -22,8 +22,8 @@ const authMiddleware = (req, res, next) => {
         // console.log("to verify")
         const decode = jwt.verify(token, JWT_SECRET);
         // console.log(decode)
-        if (decode.userId) {
-            req.userId = decode.userId;
+        if (decode.email) {
+            req.email = decode.email;
             next();
         } else {
             res.status(403).json({
