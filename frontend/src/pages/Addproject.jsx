@@ -118,14 +118,13 @@ export const Addproject = () => {
                         if (response.status === 200) {
                             console.log("i am here")
                             alert("Data received and added to resume page");
+                            localStorage.removeItem("token");
                             navigate("/Work");
-                        } else {
-                          alert("Invalid user");
                         }
-                      } catch (error) {
+                    } catch {
                         alert("invalid user");
                         navigate('/');
-                      }
+                    }
                       
                     
                 }} />
