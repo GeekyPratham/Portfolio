@@ -2,6 +2,7 @@ import { Header } from "../header/Header";
 import Select from "react-select";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import CreatableSelect from 'react-select/creatable';
 
 
 export const HireMe = () => {
@@ -16,14 +17,16 @@ export const HireMe = () => {
     const [role, setRole] = useState(null);
     const [description, setDescription] = useState("");
     const [files, setFiles] = useState([]);// containing all the files
+    const [inputValue, setInputValue] = useState("");
 
     const fileInputRef = useRef(null);
     const navigate = useNavigate();
     const handleSubmit = async (e) =>{
-         // your form handling logic
-         e.preventDefault();
-         const formData = new FormData();
-         formData.append("Purpose", purpose?.value || "");
+       
+
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append("Purpose", purpose?.value || "");
         formData.append("Name", name);
         formData.append("Email", email);
         formData.append("Github", github);
@@ -40,7 +43,7 @@ export const HireMe = () => {
         }
         
          
-          // 🔍 Log FormData contents
+          //  Log FormData contents
          for (let [key, value] of formData.entries()) {
              console.log(`${key}:`, value);
          }
@@ -79,7 +82,7 @@ export const HireMe = () => {
                             {/* Purpose */}
                             <div className="w-full flex flex-col  sm:flex-row items-center justify-between">
                                 <h2 className="text-xl sm:text-2xl font-bold text-green-400">Purpose</h2>
-                                <Select
+                                <CreatableSelect
                                     ref={selectRef}
                                     className="w-full sm:w-1/2 mt-2 sm:mt-0 text-black border p-2 rounded"
                                     options={[
@@ -89,8 +92,18 @@ export const HireMe = () => {
                                         { value: "help_consulting", label: "Help & Consulting" }
                                     ]}
                                     onChange={(option) => setPurpose(option)}
+                                    onInputChange={(val) => setInputValue(val)}
+                                    onBlur={() => {
+                                        if (inputValue && (!purpose || inputValue !== purpose.value)) {
+                                            const newOption = { value: inputValue, label: inputValue };
+                                            setPurpose(newOption);
+                                        }
+                                    }}
+                                    inputValue={inputValue}
                                     value={purpose}
                                 />
+
+
                             </div>
                             {/* Name */}
                             <div>

@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import Button from "../components/Button";
 import { Header } from "../header/Header";
 import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaGithub, FaLinkedin, FaEnvelope, FaPhone } from "react-icons/fa";
-import { SiDjango, SiTailwindcss, SiMongodb, SiCplusplus, SiTypescript, SiPython, SiMysql, SiExpress, SiDocker, SiTurborepo, SiPostgresql, SiPrisma } from "react-icons/si";
+import { SiHono, SiTailwindcss, SiMongodb, SiCplusplus, SiTypescript, SiPython, SiMysql, SiExpress, SiDocker, SiTurborepo, SiPostgresql, SiPrisma , SiCloudflare  } from "react-icons/si";
 
 const skills = [
     { name: "C++", icon: <SiCplusplus className="text-blue-500" /> },
@@ -15,13 +15,17 @@ const skills = [
     { name: "React", icon: <FaReact className="text-cyan-400" /> },
     { name: "Node.js", icon: <FaNodeJs className="text-green-500" /> },
     { name: "Express.js", icon: <SiExpress className="text-gray-400" /> },
-    { name: "Django", icon: <SiDjango className="text-green-500" /> },
     { name: "Tailwind CSS", icon: <SiTailwindcss className="text-blue-400" /> },
     { name: "MongoDB", icon: <SiMongodb className="text-green-400" /> },
     { name: "Docker", icon: <SiDocker className="text-blue-500" /> },
     { name: "Turborepo", icon: <SiTurborepo className="text-gray-400" /> },
     { name: "PostgreSQL", icon: <SiPostgresql className="text-blue-600" /> },
-    { name: "Prisma", icon: <SiPrisma className="text-gray-900" /> }
+    { name: "Prisma", icon: <SiPrisma className="text-gray-900" /> },
+    { name: "Hono", icon: <SiHono className="text-blue-500" /> },
+    { name: "Cloudflare", icon: <SiCloudflare className="text-yellow-400" /> },
+
+
+
 ];
 
 export const Resume = () => {
@@ -54,10 +58,10 @@ export const Resume = () => {
                     <div className="flex flex-col gap-3 w-full justify-center items-center sm:items-start">
                         <Button buttonName="Experience" onClick={() => handleButtonClick(0)} width="w-48 sm:w-60" />
                         <Button buttonName="Education" onClick={() => handleButtonClick(1)} width="w-48 sm:w-60" />
-                        <Button buttonName="Courses" onClick={() => handleButtonClick(4)} width="w-48 sm:w-60" />
+                        <Button buttonName="Courses/Certificate" onClick={() => handleButtonClick(4)} width="w-48 sm:w-60" />
                         <Button buttonName="Skills" onClick={() => handleButtonClick(2)} width="w-48 sm:w-60" />
                         <Button buttonName="About Me" onClick={() => handleButtonClick(3)} width="w-48 sm:w-60" />
-                        <Button buttonName="View Resume" onClick={() => window.open("/res.pdf", "_blank")} width="w-48 sm:w-60" />
+                        <Button buttonName="View Resume" onClick={() => window.open("/PrathamRaj_resume.pdf", "_blank")} width="w-48 sm:w-60" />
                     </div>
 
                 </div>
@@ -111,7 +115,7 @@ function Experience() {
     return (
         <div className="flex flex-col gap-5 justify-center items-start w-full rounded-lg">
             <h1 className="text-3xl font-bold text-green-400">Experience</h1>
-            <div className="w-full gap-3 rounded-lg bg-gray-900/80 border border-gray-700 shadow-lg backdrop-blur-lg p-6 h-[500px] overflow-y-auto">
+            <div className="w-full flex flex-col gap-3 rounded-lg bg-gray-900/80 border border-gray-700 shadow-lg backdrop-blur-lg p-6 h-[500px] overflow-y-auto">
                 <div className="p-2 bg-gray-900/80 border border-gray-700 shadow-lg rounded-lg">
                     <h2 className="text-l font-bold text-green-400">
                         Alumni Association Portal - Smart India Hackathon (SIH) 2024
@@ -120,6 +124,19 @@ function Experience() {
                         Collaborated in a team to develop a full-stack Alumni Association Platform as part of SIH 2024.
                     </p>
                 </div>
+                <div className="p-2 bg-gray-900/80 border border-gray-700 shadow-lg rounded-lg">
+                    <h2 className="text-l font-bold text-green-400">
+                        Participated in Code2Career Coding Arena
+                    </h2>
+                    <a href="https://unstop.com/certificate-preview/3bdecfc4-28fa-4756-9b8a-cc9ea24fb70b"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-400 underline hover:text-blue-300">Certificate</a>
+                    <p className="text-gray-300">
+                        Second Runner Up in the Code2Career Coding Arena, showcasing strong problem-solving skills and coding proficiency.
+                    </p>
+                </div>
+                
             </div>
         </div>
     );
@@ -177,7 +194,7 @@ function Skills() {
 function Courses() {
     return (
         <div className="flex flex-col gap-5 justify-center items-start w-full rounded-lg">
-            <h1 className="text-3xl font-bold text-green-400">Courses</h1>
+            <h1 className="text-3xl font-bold text-green-400">Courses/Certificate</h1>
             <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 rounded-lg bg-gray-900/80 border border-gray-700 shadow-lg backdrop-blur-lg p-6 min-h-[500px] overflow-y-auto">
                 <div className="p-2 max-h-[200px] bg-gray-900/80 border border-gray-700 shadow-lg rounded-lg overflow-auto">
                     <h2 className="text-l font-bold text-green-400">DSA - Nov 10, 2023</h2>
@@ -194,6 +211,22 @@ function Courses() {
                         rel="noopener noreferrer"
                         className="text-blue-400 underline hover:text-blue-300">Certificate</a>
                     <p>Certified Postman Student Expert with proficiency in API testing, scripting, and automation using Postman.</p>
+                </div>
+                <div className="p-2 max-h-[200px] bg-gray-900/80 border border-gray-700 shadow-lg rounded-lg overflow-auto">
+                    <h2 className="text-l font-bold text-green-400">Python Matplotlib - September 2024</h2>
+                    <a href="https://drive.google.com/file/d/1ftVvEw_-8FzyslEB5H3TG6SrFn8B9Qr0/view?usp=sharing"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-400 underline hover:text-blue-300">Certificate</a>
+                    <p>Successfully completed the fundamentals of data visualization using the Matplotlib library. Learned how to create various types of plots including line charts, bar graphs, scatter plots, and subplots etc. </p>
+                </div>
+                <div className="p-2 max-h-[200px] bg-gray-900/80 border border-gray-700 shadow-lg rounded-lg overflow-auto">
+                    <h2 className="text-l font-bold text-green-400">Python Coder - June 2025</h2>
+                    <a href="https://www.kaggle.com/certification/badges/geekyprathamraj/30"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-400 underline hover:text-blue-300">Certificate</a>
+                    <p>Earned the Python Coder Badge from Kaggle for demonstrating proficiency in Python programming.</p>
                 </div>
             </div>
         </div>
