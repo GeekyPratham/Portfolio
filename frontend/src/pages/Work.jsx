@@ -4,13 +4,13 @@ import axios from "axios";
 import { useSwipeable } from "react-swipeable";
 import { Header } from "../header/Header";
 import Button from "../components/Button";
-
+import { BACKEND_URL } from "../../config"
 export const Work = () => {
     const [project, setProject] = useState([]);
     const [currIndex, setCurrIndex] = useState(0);
 
     useEffect(() => {
-        axios.get("https://portfolio-hppv.onrender.com/getProject")
+        axios.get(`${BACKEND_URL}/getProject`)
             .then(response => {
                 console.log("Full Backend Response:", response.data || []);
                 setProject(response.data.project);

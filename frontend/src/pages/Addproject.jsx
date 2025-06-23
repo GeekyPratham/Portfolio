@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useRef } from "react";
 import axios from "axios";
 import CrossButton from "../components/CrossButton";
+import { BACKEND_URL } from "../../config";
 
 export const Addproject = () => {
     const [title, setTitle] = useState("");
@@ -134,7 +135,7 @@ export const Addproject = () => {
                     try {
                         console.log("Token being sent:", "Bearer " + localStorage.getItem("token"));
 
-                        const response = await axios.post("https://portfolio-hppv.onrender.com/addproject", {
+                        const response = await axios.post(`${BACKEND_URL}/addproject`, {
                             title,
                             description,
                             techUsed,

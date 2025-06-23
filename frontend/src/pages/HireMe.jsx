@@ -3,6 +3,7 @@ import Select from "react-select";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CreatableSelect from 'react-select/creatable';
+import { BACKEND_URL } from "../../config";
 
 
 export const HireMe = () => {
@@ -48,7 +49,7 @@ export const HireMe = () => {
              console.log(`${key}:`, value);
          }
          try{
-             const res = await fetch("https://portfolio-hppv.onrender.com/sendEmail",{
+             const res = await fetch(`${BACKEND_URL}/sendEmail`,{
                  method : "POST",
                  body : formData,
              });

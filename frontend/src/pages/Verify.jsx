@@ -3,6 +3,7 @@ import Button from "../components/Button";
 import Inputbox from "../components/Inputbox";
 import { useState } from "react";
 import axios from "axios";
+import { BACKEND_URL } from "../../config";
 
 export const Verify = () => {
     const [generatedOtp, setGeneratedOtp] = useState(null);
@@ -15,7 +16,7 @@ export const Verify = () => {
         setGeneratedOtp(num);
 
         try {
-            const response = await fetch("https://portfolio-hppv.onrender.com/sendOTP", {
+            const response = await fetch(`${BACKEND_URL}/sendOTP`, {
                 // https://portfolio-hppv.onrender.com
                 method: "POST",
                 headers: {
@@ -41,7 +42,7 @@ export const Verify = () => {
             return;
         }
         if (parseInt(enteredOtp) === generatedOtp) {
-            const res = await axios.post("https://portfolio-hppv.onrender.com/userVerify",{
+            const res = await axios.post(`${BACKEND_URL}/userVerify`,{
                 email
             })
             console.log(res.data.token);
