@@ -18,7 +18,9 @@ const {authMiddleware} =  require("./middlewares.js")
 
 const allowedOrigins = [
     "https://prathamrajportfolio.vercel.app/",
-    "http://localhost:5173"
+    "https://prathamrajportfolio-gfe8m7rd8-pratham-rajs-projects-15fe237a.vercel.app/",
+    "https://prathamrajportfolio-git-main-pratham-rajs-projects-15fe237a.vercel.app/",
+    "http://localhost:5173/"
 ];
 app.use(cors({
     origin: function (origin, callback) {
