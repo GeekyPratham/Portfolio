@@ -17,7 +17,7 @@ export const Verify = () => {
 
         try {
             const response = await fetch(`${BACKEND_URL}/sendOTP`, {
-                // https://portfolio-hppv.onrender.com
+            
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
