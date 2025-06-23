@@ -17,9 +17,7 @@ const {authMiddleware} =  require("./middlewares.js")
 // i am allowing one deployed domain to access my backend and one for local host
 
 const allowedOrigins = [
-    "https://prathamrajportfolio-git-main-pratham-rajs-projects-15fe237a.vercel.app/",
     "https://prathamrajportfolio.vercel.app/",
-    "https://prathamrajportfolio-oc1ghy9ij-pratham-rajs-projects-15fe237a.vercel.app/",
     "http://localhost:5173"
 ];
 app.use(cors({
