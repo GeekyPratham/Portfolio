@@ -6,16 +6,17 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const nodemailer = require('nodemailer');
-const Project = require('./db');
+const { Project, EmailVerification } = require('./db');
+
 const multer = require("multer");
 
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
 
 const {authMiddleware} =  require("./middlewares.js");
-const EmailVerification = require('./db');
 
-// i am allowing one deployed domain to access my backend and one for local host
+
+// i am allowing  deployed domain to access my backend and one for local host
 
 const allowedOrigins = [
     "https://prathamrajportfolio.vercel.app",
@@ -36,7 +37,7 @@ app.use(cors({
     credentials: true
   }));
 app.use(express.json());
-// console.log(process.env.GMAIL_PASS);
+//  console.log(process.env.GMAIL_PASS);
 
 // Configure email transporter (using Gmail for free)
 const transporter = nodemailer.createTransport({
@@ -172,10 +173,13 @@ app.post("/addproject",authMiddleware,async(req,res)=>{
 
 // sending all the list of project to frontend;
 app.get("/getProject",async (req,res)=>{
+    console.log("hello")
     const projects = await Project.find();
-    console.log("sending project to frontend");
+ 
     console.log(projects);
     console.log("sending project to frontend");
+   
+    // console.log("sending project to frontend");
     res.json({
         project: projects.map(proj=>({
             title: proj.title,

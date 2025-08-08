@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 mongoose.connect(`${process.env.MONGO_URI}`)    
-
+console.log("after connecting the mongodb database")
 const projectSchema = new Schema({
     title:{
         type: String,
@@ -53,5 +53,7 @@ const emailVerificationSchema = new Schema({
 const Project = mongoose.model('Project', projectSchema);
 const EmailVerification = mongoose.model('EmailVerification',emailVerificationSchema)
 
-module.exports = Project;
-module.exports = EmailVerification;
+module.exports = {
+  Project,
+  EmailVerification
+};

@@ -10,12 +10,14 @@ export const Work = () => {
     const [currIndex, setCurrIndex] = useState(0);
 
     useEffect(() => {
+        console.log("sending request to backend");
         axios.get(`${BACKEND_URL}/getProject`)
             .then(response => {
                 console.log("Full Backend Response:", response.data || []);
                 setProject(response.data.project);
             })
             .catch(error => console.error("Error fetching projects:", error));
+
     }, []);
 
     const navigate = useNavigate();
