@@ -6,6 +6,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 const authMiddleware = (req, res, next) => {
     const authHeader = req.headers.authorization;
+    console.log("authHeader")
     console.log(authHeader)
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return res.status(403).json({

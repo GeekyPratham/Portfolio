@@ -132,6 +132,7 @@ export const Addproject = () => {
 
                 {/* Submit Button */}
                 <Button buttonName="Submit" onClick={async () => {
+                    console.log(localStorage.getItem("token"))
                     try {
                         console.log("Token being sent:", "Bearer " + localStorage.getItem("token"));
 
