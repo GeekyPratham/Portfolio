@@ -22,7 +22,7 @@ export const Addproject = () => {
     const [loading, setLoading] = useState(false); //  New state for loader
     
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen w-full bg-gradient-to-r from-black via-gray-900 to-gray-800 px-4">
+        <div className="w-screen min-h-screen overflow-y-auto bg-gradient-to-b from-black via-gray-900 to-gray-800 px-1 md:px-6 py-4 md:py-6 text-white">
             <div className="w-full max-w-2xl bg-gray-900 text-gray-300 rounded-lg p-6 border-2 border-gray-700 shadow-lg mt-4 mb-4">
                 <h2 className="text-2xl font-bold text-green-400 mb-4 text-center">Add Your Project</h2>
 

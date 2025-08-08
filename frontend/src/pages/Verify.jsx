@@ -6,14 +6,12 @@ import axios from "axios";
 import { BACKEND_URL } from "../../config";
 
 export const Verify = () => {
-    const [generatedOtp, setGeneratedOtp] = useState(null);
+    
     const [email, setEmail] = useState("");
     const [enteredOtp, setEnteredOtp] = useState("");
     const navigate = useNavigate();
 
     const generateOTP = async () => {
-        const num = Math.floor(100000 + Math.random() * 900000);
-        setGeneratedOtp(num);
 
         try {
             const response = await fetch(`${BACKEND_URL}/sendOTP`, {
@@ -22,8 +20,9 @@ export const Verify = () => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ email: email, otp: num })
+                body: JSON.stringify({ email: email})
             });
+            console.log(response)
             const data = await response.json();
             console.log(data);
             if (data.success) {
@@ -37,21 +36,26 @@ export const Verify = () => {
     };
 
     const verifyOTP = async () => {
-        if (!generatedOtp) {
-            alert("Please generate an OTP first");
-            return;
-        }
-        if (parseInt(enteredOtp) === generatedOtp) {
+        
+        try{
             const res = await axios.post(`${BACKEND_URL}/userVerify`,{
-                email
+                email,
+                enteredOtp   
             })
+            console.log(res.data.msg)
             console.log(res.data.token);
             localStorage.setItem("token",  res.data.token)
             alert("OTP Verified");
             navigate('/Addproject');
-        } else {
-            alert("OTP Mismatch");
+
         }
+        catch(err){
+            console.log(err);
+            alert("wrong otp")
+        }
+       
+        
+       
     };
 
     return (

@@ -68,7 +68,7 @@ export const HireMe = () => {
          }
     }
     return (
-        <div className="w-screen h-screen overflow-y-auto bg-gradient-to-b from-black via-gray-900 to-gray-800 px-6  py-6 text-white">
+        <div className="w-screen min-h-screen overflow-y-auto bg-gradient-to-b from-black via-gray-900 to-gray-800 px-1 md:px-6 py-4 md:py-6 text-white">
             {/* Header */}
             <header className="mb-8">
                 <Header />
@@ -90,7 +90,8 @@ export const HireMe = () => {
                                         { value: "hiring", label: "Hiring" },
                                         { value: "collaboration", label: "Collaboration" },
                                         { value: "task_assignment", label: "Task Assignment" },
-                                        { value: "help_consulting", label: "Help & Consulting" }
+                                        { value: "help_consulting", label: "Help & Consulting" },
+                                        { value: "others..", label: "others.." }
                                     ]}
                                     onChange={(option) => setPurpose(option)}
                                     onInputChange={(val) => setInputValue(val)}
@@ -170,7 +171,8 @@ export const HireMe = () => {
                                         { value: "uiux", label: "UI/UX" },
                                         { value: "backend", label: "Backend" },
                                         { value: "frontend", label: "Frontend" },
-                                        { value: "node", label: "Node.js" }
+                                        { value: "node", label: "Node.js" },
+                                        { value: "others..", label: "others.." }
                                     ]}
                                     onChange={(option) => setRole(option)}
                                     value={role}

@@ -34,7 +34,24 @@ const projectSchema = new Schema({
         default: []
     }
 })
+const emailVerificationSchema = new Schema({
+    email:{
+        type: String,
+        required: true
+    },
+    otp:{
+        type: String,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        expires: 300 // 5 minutes auto delecte
+    } 
 
+})
 const Project = mongoose.model('Project', projectSchema);
+const EmailVerification = mongoose.model('EmailVerification',emailVerificationSchema)
 
 module.exports = Project;
+module.exports = EmailVerification;

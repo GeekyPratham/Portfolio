@@ -12,7 +12,8 @@ const multer = require("multer");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
 
-const {authMiddleware} =  require("./middlewares.js")
+const {authMiddleware} =  require("./middlewares.js");
+const EmailVerification = require('./db');
 
 // i am allowing one deployed domain to access my backend and one for local host
 
@@ -47,7 +48,7 @@ const transporter = nodemailer.createTransport({
 });
 app.post("/sendOTP",async(req,res)=>{
     console.log("object");
-    const {email,otp} = req.body;
+    const {email} = req.body;
     // console.log(email);
     // console.log(otp);
     console.log(req.body.email);
@@ -58,14 +59,23 @@ app.post("/sendOTP",async(req,res)=>{
             msg:"this is not the valid email"
         })
     }
+    const num = Math.floor(100000 + Math.random() * 900000);
+    
+    const storeOTP = await EmailVerification.create({
+        email: email,
+        otp: num,
+    })
+    await storeOTP.save();
+
+
 
     const mailOption = {
         from: process.env.GMAIL_USER,
         to: email,
         subject: "OTP for verification",
-        text: `your OTP is ${otp}`,
+        text: `your OTP is ${num}`,
     }
-     transporter.sendMail(mailOption, (error, info) => {
+    transporter.sendMail(mailOption, (error, info) => {
         if (error) {
             console.error('Error sending email:', error);
             res.status(500).json({ success: false, error });
@@ -79,16 +89,49 @@ app.post("/sendOTP",async(req,res)=>{
 
 
 app.post("/userVerify", async(req,res)=>{
-    const {email} = req.body;
+    console.log("userVerification")
+    const {email,enteredOtp} = req.body;
+    console.log(req.body)
+    console.log(email);
+    const otp = enteredOtp;
+    console.log(otp);
+
+    const userEmail = await EmailVerification.findOne({
+        email: email
+    })
+    console.log(userEmail);
+    
+    if(!userEmail ){
+        console.log("user not exist")
+        return ({
+            msg: "wrong email"
+        })
+    }
+    
+
+    const currentTime = new Date();
+    if (userEmail.expiresAt && userEmail.expiresAt < currentTime) {
+        return res.status(400).json({ msg: "OTP expired. Please request a new one." });
+    }
+
+    if (userEmail.otp !== otp) {
+        return res.status(400).json({ msg: "Invalid OTP. Please try again." });
+    }
+
     const token = jwt.sign({
         email
     },JWT_SECRET);
 
+    await EmailVerification.deleteOne({ email: email });
+
+    
     return res.status(200).json({
         msg:"owner login successfull!",
         token:token
     })
 })
+
+
 app.post("/addproject",authMiddleware,async(req,res)=>{
     console.log(req.body);
     console.log("pratham raj")
