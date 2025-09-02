@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const express = require('express');
+const bcrypt = require('bcrypt');
 const app = express();
 const cors = require('cors');
 const nodemailer = require('nodemailer');
@@ -48,23 +49,33 @@ const transporter = nodemailer.createTransport({
     },
 });
 app.post("/sendOTP",async(req,res)=>{
-    console.log("object");
+
+    // console.log("object");
     const {email} = req.body;
-    // console.log(email);
-    // console.log(otp);
+    console.log(email);
+  
     console.log(req.body.email);
     const m = `${process.env.GMAIL_USER}`;
-    console.log(m);
+
     if(email!== `${process.env.GMAIL_USER}`){
         return res.status(411).json({
             msg:"this is not the valid email"
         })
     }
+
     const num = Math.floor(100000 + Math.random() * 900000);
+    console.log(num);
+    const hashedOtp = await bcrypt.hash(num.toString(), 10);
+   
+    console.log(hashedOtp);
+    console.log(typeof(hashedOtp));
+
+    // if already exist in database then delete it and create new one
+    await EmailVerification.deleteMany({ email });
     
     const storeOTP = await EmailVerification.create({
         email: email,
-        otp: num,
+        otp: hashedOtp,
     })
     await storeOTP.save();
 
@@ -94,8 +105,8 @@ app.post("/userVerify", async(req,res)=>{
     const {email,enteredOtp} = req.body;
     console.log(req.body)
     console.log(email);
-    const otp = enteredOtp;
-    console.log(otp);
+    // const otp = enteredOtp;
+    // console.log(otp);
 
     const userEmail = await EmailVerification.findOne({
         email: email
@@ -109,15 +120,16 @@ app.post("/userVerify", async(req,res)=>{
         })
     }
     
-
-    const currentTime = new Date();
-    if (userEmail.expiresAt && userEmail.expiresAt < currentTime) {
-        return res.status(400).json({ msg: "OTP expired. Please request a new one." });
+    const otpMatch = await bcrypt.compare(enteredOtp, userEmail.otp);
+    console.log(otpMatch);
+    if (!otpMatch) {
+        return res.status(400).json({ success: false, message: "Wrong OTP" });
     }
 
-    if (userEmail.otp !== otp) {
-        return res.status(400).json({ msg: "Invalid OTP. Please try again." });
-    }
+    // const currentTime = new Date();
+    // if (userEmail.expiresAt && userEmail.expiresAt < currentTime) {
+    //     return res.status(400).json({ msg: "OTP expired. Please request a new one." });
+    // }
 
     const token = jwt.sign({
         email

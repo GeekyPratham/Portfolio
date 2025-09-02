@@ -16,6 +16,7 @@ export const Verify = () => {
     const [verifyLoading,setverifyLoading] = useState(false);
 
     const generateOTP = async () => {
+        if (loading) return;
         setLoading(true);
         try {
             if(!email){
@@ -46,6 +47,7 @@ export const Verify = () => {
     };
 
     const verifyOTP = async () => {
+        if(verifyLoading) return;
         setverifyLoading(true)
         try{
             if(!email || !enteredOtp){
@@ -88,13 +90,13 @@ export const Verify = () => {
                     <Inputbox onChange={(e) => setEmail(e.target.value)} placeholder="Email" name="Email" className="mb-4 text-black" />
                     <br />
                     <Button 
-                    disable={loading}
+                    disabled={loading}
                     buttonName={loading?"sending OTP ..": "Send OTP"} onClick={generateOTP} className="w-full bg-green-700 hover:bg-green-600 transition-all text-white" />
 
                     <Inputbox onChange={(e) => setEnteredOtp(e.target.value)} placeholder="Enter OTP" name="OTP" className="mt-4 mb-4 text-black" />
                     <br />
                     <Button 
-                    disable={verifyLoading}
+                    disabled={verifyLoading}
                     buttonName={verifyLoading?"verifying OTP":"verify OTP"} onClick={verifyOTP} className="w-full bg-green-700 hover:bg-green-600 transition-all text-white" />
             </div>
          
