@@ -58,7 +58,7 @@ export const Resume = () => {
                 <div className="flex flex-col  gap-5 justify-center items-center sm:items-start w-full sm:w-1/2 h-full p-5 rounded-lg mt-5">
                     <h1 className="text-3xl sm:text-4xl font-bold text-green-400 text-center sm:text-left">Hello, I'm Pratham Raj</h1>
                     <p className="text-center sm:text-left">
-                        I'm Pratham Raj, a passionate tech enthusiast with a deep interest in software development and problem-solving. I’m driven by the challenge of building impactful solutions using cutting-edge technologies. My goal is to create meaningful, user-focused experiences while continuously evolving in the ever-changing tech world.
+                       A passionate tech enthusiast with a deep interest in software development and problem-solving. I’m driven by the challenge of building impactful solutions using cutting-edge technologies. My goal is to create meaningful, user-focused experiences while continuously evolving in the ever-changing tech world.
                     </p>
 
                     <div className="flex flex-col gap-3 w-full justify-center items-center sm:items-start">

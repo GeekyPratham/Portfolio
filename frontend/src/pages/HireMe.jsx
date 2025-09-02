@@ -7,9 +7,11 @@ import { BACKEND_URL } from "../../config";
 
 
 export const HireMe = () => {
-    const selectRef = useRef(null);
 
+   
     const [purpose, setPurpose] = useState(null);
+    const [inputValue, setInputValue] = useState("");
+
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [github, setGithub] = useState("");
@@ -17,13 +19,19 @@ export const HireMe = () => {
     const [contact, setContact] = useState("");
     const [role, setRole] = useState(null);
     const [description, setDescription] = useState("");
-    const [files, setFiles] = useState([]);// containing all the files
-    const [inputValue, setInputValue] = useState("");
 
+    const [files, setFiles] = useState([]);// containing all the files
     const fileInputRef = useRef(null);
+
+    const [loading , setLoading] = useState(false);
+
+    
+
     const navigate = useNavigate();
+    
     const handleSubmit = async (e) =>{
        
+        setLoading(true);
 
         e.preventDefault();
         const formData = new FormData();
@@ -66,6 +74,7 @@ export const HireMe = () => {
              console.error("Error submitting form:", error);
              alert("Submission failed.");
          }
+         setLoading(false);
     }
     return (
         <div className="w-screen min-h-screen overflow-y-auto bg-gradient-to-b from-black via-gray-900 to-gray-800 px-1 md:px-6 py-4 md:py-6 text-white">
@@ -75,7 +84,7 @@ export const HireMe = () => {
             </header>
             <div className="w-full flex justify-center mt-10">
                 <div className="w-full max-w-6xl bg-black/50  border border-gray-700  bg-opacity-80  backdrop-blur-lg  p-1 sm:p-8 rounded-xl shadow-xl">
-                    <h2 className="text-3xl  sm:text-4xl mt-2 font-bold text-green-400 text-center mb-3">Let's Work</h2>
+                    <h2 className="text-3xl  sm:text-4xl mt-2 font-bold text-green-400 text-center mb-3"> Let's Work</h2>
                     <form onSubmit={handleSubmit} className="w-full bg-gray-900 backdrop-blur-lg  p-1 sm:p-5 flex flex-col gap-5 min-h-[60vh]">
                         {/* Fill your details */}
                         <h3 className="text-xl sm:text-2xl font-bold text-green-400">Fill your details</h3>
@@ -84,25 +93,33 @@ export const HireMe = () => {
                             <div className="w-full flex flex-col  sm:flex-row items-center justify-between">
                                 <h2 className="text-xl sm:text-2xl font-bold text-green-400">Purpose</h2>
                                 <CreatableSelect
-                                    ref={selectRef}
+                                    
                                     className="w-full sm:w-1/2 mt-2 sm:mt-0 text-black border p-2 rounded"
                                     options={[
                                         { value: "hiring", label: "Hiring" },
                                         { value: "collaboration", label: "Collaboration" },
                                         { value: "task_assignment", label: "Task Assignment" },
                                         { value: "help_consulting", label: "Help & Consulting" },
-                                        { value: "others..", label: "others.." }
+                                        // { value: "others..", label: "others.." }
                                     ]}
-                                    onChange={(option) => setPurpose(option)}
-                                    onInputChange={(val) => setInputValue(val)}
+                                    onChange={(option) => {
+                                        console.log(option);
+                                        setPurpose(option)
+                                        
+                                    }}
+                                    onInputChange={(val) => {
+                                        console.log(val);
+                                        setInputValue(val)
+                                    }}
                                     onBlur={() => {
                                         if (inputValue && (!purpose || inputValue !== purpose.value)) {
                                             const newOption = { value: inputValue, label: inputValue };
                                             setPurpose(newOption);
                                         }
                                     }}
-                                    inputValue={inputValue}
+                                    // inputValue={inputValue}
                                     value={purpose}
+                                    required
                                 />
 
 
@@ -115,7 +132,11 @@ export const HireMe = () => {
                                     className="w-full p-2 mt-2 border rounded bg-gray-700 text-white"
                                     placeholder="Enter your name"
                                     value={name}
-                                    onChange={(e) => setName(e.target.value)}
+                                    onChange={(e) => {
+                                        console.log(e.target.value);
+                                        setName(e.target.value)
+                                    }}
+                                    required
                                 />
                             </div>
                             {/* Email */}
@@ -127,6 +148,7 @@ export const HireMe = () => {
                                     placeholder="Enter your email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
+                                    required
                                 />
                             </div>
                             {/* GitHub */}
@@ -138,6 +160,7 @@ export const HireMe = () => {
                                     placeholder="Enter your GitHub link"
                                     value={github}
                                     onChange={(e) => setGithub(e.target.value)}
+                                    required
                                 />
                             </div>
                             {/* LinkedIn */}
@@ -149,6 +172,7 @@ export const HireMe = () => {
                                     placeholder="Enter your LinkedIn"
                                     value={linkedin}
                                     onChange={(e) => setLinkedin(e.target.value)}
+                                    required
                                 />
                             </div>
                             {/* Contact Number */}
@@ -160,6 +184,7 @@ export const HireMe = () => {
                                     placeholder="Enter your contact number"
                                     value={contact}
                                     onChange={(e) => setContact(e.target.value)}
+                                    
                                 />
                             </div>
                             {/* Role */}
@@ -176,6 +201,7 @@ export const HireMe = () => {
                                     ]}
                                     onChange={(option) => setRole(option)}
                                     value={role}
+                                    required
                                 />
                             </div>
                             {/* Description */}
@@ -187,6 +213,7 @@ export const HireMe = () => {
                                     placeholder="Enter description"
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
+                                    required
                                 ></textarea>
                             </div>
                             {/* Attach File */}
@@ -194,6 +221,7 @@ export const HireMe = () => {
                                 <h2 className="text-xl font-bold text-green-400">Attach File</h2>
                                 <div className="w-full bg-gray-800 p-4 rounded-lg shadow-md border border-gray-700 flex flex-col items-center">
                                     <input
+                                        // we use ref to clear the input field after file selection so that same file can be selected again if needed.
                                         ref={fileInputRef}
                                         type="file"
                                         multiple
@@ -235,7 +263,12 @@ export const HireMe = () => {
                             </div>
                             {/* Submit Button */}
                             <div className="text-center">
-                                <button type="submit" className="px-6 py-3 mt-4 bg-green-500 text-white rounded-xl hover:bg-green-600 transition duration-300">Send</button>
+                                <button 
+                                disabled={loading}
+                                type="submit" className="px-6 py-3 mt-4 bg-green-500 text-white rounded-xl hover:bg-green-600 transition duration-300">
+
+                                    {loading ? "Submitting..." : "Submit"}
+                                </button>
                             </div>
                         </div>
                     </form>

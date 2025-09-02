@@ -46,7 +46,7 @@ const emailVerificationSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        expires: 300 // 5 minutes auto delecte
+        expires: 300 // 5 minutes auto delete
     } 
 
 })
