@@ -133,7 +133,9 @@ app.post("/userVerify", async(req,res)=>{
 
     const token = jwt.sign({
         email
-    },JWT_SECRET);
+    },JWT_SECRET,{
+        expiresIn: '1h' // Token valid for 1 hour
+    });
 
     await EmailVerification.deleteOne({ email: email });
 
